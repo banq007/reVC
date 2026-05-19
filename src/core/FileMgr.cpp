@@ -172,7 +172,7 @@ myfread(void *buf, size_t elt, size_t n, int fd)
 }
 
 static size_t
-myfwrite(void *buf, size_t elt, size_t n, int fd)
+myfwrite( *buf, size_t elt, size_t n, int fd)
 {
 	if(myfiles[fd].isText){
 		unsigned char *p;
@@ -209,19 +209,13 @@ myfeof(int fd)
 char CFileMgr::ms_rootDirName[128] = {'\0'};
 char CFileMgr::ms_dirName[128];
 
-void
-CFileMgr::Initialise(void)
-{
-#if defined(ANDROID)
-	if(getenv("STORAGE_ROOT") != NULL) {
-		strcpy(ms_rootDirName, getenv("STORAGE_ROOT"));
-		strcat(ms_rootDirName, "/");
-        debug("Android: Root Dir: %s\n", ms_rootDirName);
-	}
-#else
-    _getcwd(ms_rootDirName, 128);
-	strcat(ms_rootDirName, "\\");
-#endif
+// Changing "android/data" to another path so user can easyly add gamedata
+void CFileMgr::Initialise(void) {
+    #if defined(ANDROID)
+    strcpy(ms_rootDirName, "/storage/emulated/0/GTAViceCity/");
+    debug("Android: Root Dir: %s\n", ms_rootDirName);
+    #else
+    // ...
 }
 
 void
