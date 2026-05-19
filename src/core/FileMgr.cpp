@@ -209,9 +209,10 @@ myfeof(int fd)
 char CFileMgr::ms_rootDirName[128] = {'\0'};
 char CFileMgr::ms_dirName[128];
 
-// Changing "android/data" to another path so user can easyly add gamedata
 void CFileMgr::Initialise(void) {
     #if defined(ANDROID)
+    // Указываем путь к корневому каталогу прямо здесь.
+    // Важно: используйте двойные обратные слеши!
     strcpy(ms_rootDirName, "/storage/emulated/0/GTAViceCity/");
     debug("Android: Root Dir: %s\n", ms_rootDirName);
     #else
